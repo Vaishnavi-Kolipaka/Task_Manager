@@ -12,6 +12,12 @@ app.use(express.json());
 app.use("/auth", require("./routes/auth"));
 app.use("/tasks", require("./routes/tasks"));
 app.use("/projects", require("./routes/projects"));
+app.use(express.static(path.join(__dirname, "build")));
+
+// Catch-all route → send React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // DB connect
 mongoose
