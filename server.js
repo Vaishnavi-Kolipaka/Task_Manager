@@ -5,19 +5,16 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin:"https://taskmanagervk.netlify.app/",
+    credentials: true
+}));
 app.use(express.json());
 
 // Routes
 app.use("/auth", require("./routes/auth"));
 app.use("/tasks", require("./routes/tasks"));
 app.use("/projects", require("./routes/projects"));
-app.use(express.static(path.join(__dirname, "build")));
-
-// Catch-all route → send React app
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 // DB connect
 mongoose
